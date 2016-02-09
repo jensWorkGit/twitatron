@@ -19,9 +19,9 @@ var app = express();
 
 // Tell Express to use sessions
 app.use(session({
-  secret: secrets.sessionSecret,
-  resave: false,
-  saveUninitialized: false,
+    secret: secrets.sessionSecret,
+    resave: false,
+    saveUninitialized: false,
 }));
 
 // Use the passport package in our application
@@ -29,9 +29,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Setup objects needed by views
-app.use(function(req, res, next) {
-  res.locals.user = req.user;
-  next();
+app.use(function (req, res, next) {
+    res.locals.user = req.user;
+    next();
 });
 
 // Add content compression middleware
@@ -39,7 +39,7 @@ app.use(compression());
 
 // Add static middleware
 var oneDay = 86400000;
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: oneDay }));
+app.use(express.static(path.join(__dirname, 'public'), {maxAge: oneDay}));
 
 // Add jade view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -53,8 +53,9 @@ router.get('/', homeController.index);
 
 // Auth routes
 router.get('/auth/twitter', authController.twitter);
-router.get('/auth/twitter/callback', authController.twitterCallback, function(req, res) {
-  res.redirect(req.session.returnTo || '/');});
+router.get('/auth/twitter/callback', authController.twitterCallback, function (req, res) {
+    res.redirect(req.session.returnTo || '/');
+});
 router.get('/auth/logout', authController.logout);
 
 // Register all our routes
